@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+		<title>Visualization of Dynamic Network</title>
+		<meta name="description" content="Visualization of Dynamic Network" />
+
+		<style>
+			html, body {
+				height: 100%;
+			}
+
+			body {
+				font-family: 'Helvetica Neue', Helvetica, sans-serif;
+				background: black;
+				margin: 0;
+				overflow: hidden;
+			}
+
+			canvas {
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+
+			#globe {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+
+			#fullscreen {
+				position: absolute;
+				bottom: 20px;
+				right: 20px;
+				background: url(assets/fullscreen.png);
+				width: 32px;
+				height: 32px;
+				cursor: pointer;
+			}
+
+	/*    #pubnub {
+				position: absolute;
+				top: 20px !important;
+				left: 20px !important;
+				z-index: 200;
+				background: url(assets/logo.png);
+				background-size: contain;
+				background-repeat: no-repeat;
+				width: 200px;
+				height: 45px;
+			}*/
+
+			#title {
+				position: absolute;
+				top: 28px !important;
+				left: 23px !important;
+				display: block;
+				color: white;
+				text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+				font-size: 34px;
+				z-index: 202;
+			}
+			#topTitle1{
+				position: absolute;
+				color: white;
+				top: 5px;
+				left: 800px ;
+				right: 160px;
+				/*display: block;*/
+				font-size: 18px;
+				 text-align: center;
+				z-index: 203
+			}
+			 #topTitle2{
+				position: absolute;
+				color: white;
+				top: 5px;
+				left: 980px ;
+				right: 0px;
+				/*display: block;*/
+				font-size: 18px;
+				 text-align: center;
+				z-index: 203
+			}
+
+			#average{
+				position: absolute;
+				color: white;
+				top: 200px;
+				left: 20px ;
+			 /* right: 0px;*/
+				/*display: block;*/
+				font-size: 18px;
+				 text-align: center;
+				z-index: 204
+			}
+
+			 #wordTitle1{
+				position: absolute;
+				color: white;
+				top: 150px;
+				left: 800px ;
+				right: 160px;
+				/*display: block;*/
+				font-size: 18px;
+				 text-align: center;
+				z-index: 203
+			}
+
+			#wordTitle2{
+				position: absolute;
+				color: white;
+				top: 150px;
+				left: 980px ;
+				right: 0px;
+				/*display: block;*/
+				font-size: 18px;
+				 text-align: center;
+				z-index: 203
+			}
+
+			#wordPos{
+				background: rgba(255, 255, 255, 0.5);
+				/*background-size:80px 60px;*/
+				position: absolute;
+				line-height: 50%;
+				top: 180px;
+				left: 820px ;
+				right: 180px;
+				/*display: block;*/
+				font-size: 10px;
+				text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+		text-align: center;
+				z-index: 202;
+			}
+
+			#wordNeg{
+				background: rgba(255, 255, 255, 0.5);
+				/*background-size:80px 60px;*/
+				position: absolute;
+				line-height: 50%;
+				top: 180px;
+				left: 990px ;
+				right: 10px;
+				/*display: block;*/
+				font-size: 10px;
+				text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+		text-align: center;
+				z-index: 202;
+			}
+
+			#input1{
+			 background: rgba(255, 255, 255, 0.5);
+				/*background-size:80px 60px;*/
+				position: absolute;
+				padding: 3px 3px 8px 3px;
+				background-size: contain;
+				line-height: 50%;
+				top: 300px;
+				left: 820px ;
+				right: 10px;
+				/*display: block;*/
+				font-size: 12px;
+				text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+		text-align: center;
+				z-index: 201;
+			}
+			#topTen{
+				
+				/*background: rgba(255, 255, 255, 0.5);
+				color: white;
+				text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+				position: absolute;
+				bottom: -100px !important;
+				left: 0% !important;
+				margin-left: 0px;
+				display: block;
+				z-index: 101;
+				text-align: left;*/
+				background: rgba(255, 255, 255, 0.5);
+				/*background-size:80px 60px;*/
+				position: absolute;
+				line-height: 50%;
+				top: 35px;
+				left: 820px ;
+				right: 180px;
+				/*display: block;*/
+				font-size: 10px;
+				text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+		text-align: center;
+				z-index: 202;
+			}
+
+			#bottomTen{
+				
+				/*background: rgba(255, 255, 255, 0.5);
+				color: white;
+				text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+				position: absolute;
+				bottom: -100px !important;
+				left: 0% !important;
+				margin-left: 0px;
+				display: block;
+				z-index: 101;
+				text-align: left;*/
+				background: rgba(255, 255, 255, 0.5);
+				/*background-size:80px 60px;*/
+				position: absolute;
+				line-height: 50%;
+				top: 35px;
+				left: 990px ;
+				right: 10px;
+				/*display: block;*/
+				font-size: 10px;
+				text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+		text-align: center;
+				z-index: 202;
+			}
+			#splineChart{
+				background: rgba(255, 255, 255, 0.5);
+				/*background-size:80px 60px;*/
+				position: absolute;
+				line-height: 50%;
+				top: 200px;
+				left: 620px ;
+				right: 300px;
+				/*display: block;*/
+				font-size: 10px;
+
+		
+				z-index: 202;
+			}
+
+			#gaugeChart{
+			 /*  background: rgba(255, 255, 255, 0.5);*/
+				/*background-size:80px 60px;*/
+				position: absolute;
+				line-height: 50%;
+				top: 10px;
+				left: 30px ;
+			 /* right: 1000px;*/
+				/*display: block;*/
+				font-size: 10px;
+
+		
+				z-index: 204;
+			}
+
+
+			#info {
+				background: rgba(0, 0, 0, 0.5);
+				color: white;
+				text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+				position: absolute;
+				bottom: 20px !important;
+				left: 50% !important;
+				margin-left: -144.5px;
+				display: block;
+				z-index: 201;
+				text-align: center;
+			}
+
+			#info a {
+				color: white;
+			}
+
+			.share-btn {
+				position: absolute;
+				bottom: 20px;
+				left: 60px;
+				z-index: 203;
+			}
+
+			#qrcode {
+				position: absolute;
+				top: 0;
+				right: 20px;
+				color: #fff;
+				text-align: right;
+				font-size: 2em;
+				z-index: 300;
+			}
+
+			@-webkit-keyframes spin {
+				0% {
+					-webkit-transform: rotate(0turn);
+				}
+
+				100% {
+					-webkit-transform: rotate(1turn);
+				}
+			}
+
+			.spin {
+				-webkit-animation-name: spin;
+				-webkit-animation-duration: 1.5s;
+				-webkit-animation-iteration-count: infinite;
+			}
+		</style>
+	</head>
+	<body>
+
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-PZWSZ2"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PZWSZ2');</script>
+<!-- End Google Tag Manager -->
+		<script>
+			if (!window.WebGLRenderingContext) {
+				document.body.innerHTML = "Sorry your browser does not support WebGL. Please visit <a href='https://get.webgl.org'>https://get.webgl.org</a> for more information.";
+			}
+		</script>
+		<div id="globe">
+			<!-- <a href="https://www.pubnub.com/" target="pubnub"><div id="pubnub"></div></a> -->
+			<div id="title">Visualization of Dynamic Network</div>
+			<div id="topTitle1"> 5 happiest countries </div>
+			<div id="topTitle2"> 5 saddest countries </div>
+			<div id="average"></div>
+			<div id="wordTitle1"> 5 happiest words </div>
+			<div id="wordTitle2"> 5 saddest words </div>
+			<div id="topTen"></div>
+			<div id="bottomTen"></div>
+			<div id="wordPos"></div>
+			<div id="wordNeg"></div>
+			<div id="gaugeChart"></div>
+			<div id="splineChart"></div>
+			
+			<div id = "input1">
+			<p>Show Sentiment Change along Timeline</p>
+			
+		<input type="text" id="input">
+<button onclick="myJsFunction()">search country</button>
+</div>
+			<div id="info">
+								<p>Displaying less than 50/s of real-time twitters</p>
+				<!-- <br>
+				Images Courtesy of <a href="http://visibleearth.nasa.gov/view.php?id=55167" target="_blank">NASA</a>, <a href="https://planetpixelemporium.com/earth.html" target="_blank">JHT</a>, and <a href="http://alexcpeterson.com/spacescape" target="_blank">Spacescape</a>
+				<br> -->
+				<!-- TODO -->
+				Source on <a href="https://github.com/Alice-Ke/Visualization-of-Dynamic-Network" target="_blank">GitHub</a>
+			</div>
+
+<!--       <div id="qrcode">
+				<p><h2>Play Me:</h2></p>
+				<p>https://pubnub.github.io/webgl-controller</p>
+				<p><img src="assets/qrcode.png" alt="https://pubnub.github.io/webgl-controller"></p>
+				<p>Active Players: <span id="active_players"><img src="assets/gear.png" alt="loading..." class="spin"></span></p>
+			</div> -->
+		</div>
+		<!-- <div id="share-btn" class="share-btn"></div> -->
+		<div id="fullscreen"></div>
+		<canvas id="canvas" width="1024" height="512" style="display: none;"></canvas>
+		<script src="https://cdn.pubnub.com/pubnub.js"></script>
+		<script type="text/javascript" src="http://pubnub.github.io/eon/v/eon/0.0.10/eon.js"></script>
+		<!--<script type="text/javascript" src="https://pubnub.github.io/eon/v/eon/1.0.0/eon.js"></script>-->
+	<link type="text/css" rel="stylesheet" href="https://pubnub.github.io/eon/v/eon/1.0.0/eon.css"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+		<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+	 
+		<script src="js/three.min.js"></script>
+		<script src="js/demo.js"></script>
+		<script src="js/afinn.js"></script>
+		<script src="js/map3d.js"></script>
+		<script src="js/geo_parser.js"></script>
+		<script src="js/global.js"></script>
+	
+		<script src="js/stats.min.js"></script>
+		<script src="js/sentimood.js"></script>
+		
+		
+		<script src="js/TweetBeacon.js"></script>
+		<script src="js/globe.js"></script>
+		<script src="js/visibility.js"></script>
+		<script src="js/mousecontrols.js"></script>
+		<script src="js/pubnubcontrols.js"></script>
+		<script src="js/data.js"></script>
+		<script src="js/url-config.js"></script>
+		<script src='js/dashboard.js'></script>
+		<script src='js/try.js'></script>
+
+		<script src="https://code.jquery.com/jquery-2.1.0.min.js"></script>
+		<script src="js/share.min.js"></script>
+		<script>
+			$('.share-btn').share({
+				url: window.location.href,
+				flyout: 'top right'
+			});
+		</script>
+
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-41019038-2', 'pubnub.github.io');
+			ga('send', 'pageview');
+		</script>
+	</body>
+</html>
