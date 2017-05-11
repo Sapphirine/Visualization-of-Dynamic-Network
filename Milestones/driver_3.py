@@ -217,6 +217,7 @@ def giveSign( clf2, voc2, row ):
 	for term in line:
 		if term in voc2:
 			data[voc2[term]] = data[voc2[term]] + 1
+	data = data.reshape(1,-1) 
 	return clf2.predict(data)
 
 

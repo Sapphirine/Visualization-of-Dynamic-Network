@@ -20,9 +20,9 @@ def process():
 		res = {"sign": 0}
 	else:
 		sign = giveSign(clf2, voc2, tweet);
-		res = {"sign": sign}
+		res = {"sign": sign[0]}
 	res = json.dumps(res)
-	
+
 	return res
 
 
